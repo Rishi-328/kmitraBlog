@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMITRA</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family:"Poppins",sans-serif;
+            color: #183b56
+        }
+        p{
+            font-family: "Roboto",sans-serif;
+            color:#577592;
+            line-height: 1.4rem;
+        }
+        a{
+            text-decoration: none;
+        }
+        ul{
+            list-style: none;
+        }
+        .flex{
+            display: flex;
+            align-items: center;
+        }
+        .container{
+            max-width: 1150px;
+            margin-inline: auto;
+            overflow: hidden;
+        }
+        nav{
+            background-color: #f3faff;
+            box-shadow:0 0 4px #bbd0e2;
+            position: fixed;
+            top: 0;
+            z-index: 99;
+            left: 0;
+            right: 0;
+
+        }
+        .main-nav{
+            justify-content: space-between;
+            padding-block: 8px;
+
+        }
+        .kmitra-logo img{
+            width: 120px;
+            
+        }
+        .nav-links ul {
+            gap: 16px;
+        }
+        .hover-link{
+            cursor: pointer;
+        }
+        .hover-link:hover{
+            color:#577592;
+        }
+        .hover-link:active{
+            color:goldenrod;
+        }
+        label{
+            cursor: pointer;
+        }
+        #sort-select{
+            width:200px;
+            height:30px;
+            cursor: pointer;
+        }
+        main{
+            padding-block: 20px;
+            margin-top: 80px;
+    
+        }
+        #blog-grid{
+            display: grid;
+            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap: 20px;
+            padding: 20px;
+            
+        }
+        .blog-card{
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+        }
+        .blog-card:hover{
+            box-shadow: 1px 1px 8px #d4ecff;
+            background-color: #f9fdff;
+            transform: translateY(-5px);
+
+
+        }
+        .blog-image{
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .blog-title{
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .blog-date{
+            margin-bottom: 5px;
+
+        }
+        .blog-author{
+            margin-bottom: 5px;
+        }
+        #sort-button{
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: teal;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+        }
+        #sort-button:hover{
+            background-color: #0056b3;
+
+        }
+        #sort-button:focus{
+            outline: none;
+
+        }
+        #search-button{
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: teal;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+        }
+        #search-button:hover{
+            background-color: #0056b3;
+
+        }
+        #search-button:focus{
+            outline: none;
+
+        }
+        #search-input{
+            width:200px;
+            height:30px;
+            cursor: pointer;
+        }
+        #clear-button{
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: teal;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+        }
+        #clear-button:hover{
+            background-color: #0056b3;
+
+        }
+        #clear-button:focus{
+            outline: none;
+
+        }
+        
+
+    </style>
+
+</head>
+
+<body>
+    <nav>
+        <div class="main-nav container flex">
+            <a href="#" class="kmitra-logo"><img src="https://kmit.in/emagazine/wp-content/uploads/2018/10/meeta-ka-final.jpg"  alt="kmitra logo"></a>
+            <div id="sort-options">
+                <label for="sort-select">Sort By:</label>
+                <select id="sort-select">
+                    <option value="title-asc">Title(A-Z)</option>
+                    <option value="title-desc">Title(Z-A)</option>
+                    <option value="author-asc">Author(A-Z)</option>
+                    <option value="suthor-desc">Author(Z-A)</option>
+                    <option value="date-asc">Publication Date(Oldest first)</option>
+                    <option value="date-desc">Publication Date(Newest first)</option>
+                </select>
+                <button id="sort-button">Sort</button>
+            </div>
+            <div class="search-options">
+              <label for="search-input">Search:</label>
+              <input type="text" id="search-input" placeholder="Enter your search">
+              <button id="search-button">Search</button>
+              <button id="clear-button" style="display:none;">Clear</button>
+            </div>
+        </div>    
+    </nav>
+
+    <main id="blog-grid">
+        
+    </main>
+   
+    <script>
+        
+function showBlogContent(blog) {
+  console.log(`Showing content for blog: ${blog.title}`);
+}
+
+function sortBlogs(sortedBlogs, sortingOption) {
+  const [field, direction] = sortingOption.split('-');
+
+  switch (field) {
+    case 'title':
+      sortedBlogs.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    case 'author':
+      sortedBlogs.sort((a, b) => a.author.localeCompare(b.author));
+      break;
+    case 'date':
+      sortedBlogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+      break;
+    default:
+      break;
+  }
+
+  if (direction === 'desc') {
+    sortedBlogs.reverse();
+  }
+}
+
+function renderBlogGrid(sortedBlogs, sortingOption) {
+  sortBlogs(sortedBlogs, sortingOption);
+
+  const blogGrid = document.getElementById('blog-grid');
+  blogGrid.innerHTML = '';
+  sortedBlogs.forEach(blog => {
+    const blogCard = document.createElement('div');
+    blogCard.classList.add('blog-card');
+    blogCard.innerHTML = `
+      <img class="blog-image" src="${blog.image}" alt="${blog.title}">
+      <div class="blog-title">${blog.title}</div>
+      <div class="blog-author">Author: ${blog.author}</div>
+      <div class="blog-date">Publication Date: ${blog.date}</div>
+    `;
+
+    blogCard.addEventListener('click', () => {
+      showBlogContent(blog);
+    });
+    blogGrid.appendChild(blogCard);
+  });
+}
+
+function handleSortButtonClick() {
+  const sortByDropdown = document.getElementById('sort-select');
+  const selectedSortingOption = sortByDropdown.value;
+  renderBlogGrid(blogs, selectedSortingOption);
+}
+
+function handleSearchButtonClick() {
+  const searchInput = document.getElementById('search-input');
+  const searchQuery = searchInput.value.toLowerCase().trim();
+  const filteredBlogs = blogs.filter(blog =>
+    blog.title.toLowerCase().includes(searchQuery) ||
+    blog.author.toLowerCase().includes(searchQuery)
+  );
+
+  const sortingOption = document.getElementById('sort-select').value;
+  renderBlogGrid(filteredBlogs, sortingOption);
+
+  const clearButton = document.getElementById('clear-button');
+  clearButton.style.display = searchQuery ? 'block' : 'none';
+}
+
+function handleClearButtonClick() {
+  const searchInput = document.getElementById('search-input');
+  searchInput.value = '';
+  handleSearchButtonClick();
+}
+
+
+const sortButton = document.getElementById('sort-button');
+sortButton.addEventListener('click', handleSortButtonClick);
+
+const searchButton = document.getElementById('search-button');
+searchButton.addEventListener('click', handleSearchButtonClick);
+
+const clearButton = document.getElementById('clear-button');
+clearButton.addEventListener('click', handleClearButtonClick);
+
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('input', handleSearchButtonClick);
+
+const blogs = [
+        {
+    title: "The Importance of Continuous Learning",
+    author: "Jayashree",
+    date: "2023-07-15",
+    image: "https://source.unsplash.com/1250x700/?learning"
+  },
+  {
+    title: "Exploring the Wonders of Nature",
+    author: "Sai Krishna",
+    date: "2023-07-10",
+    image: "https://source.unsplash.com/1250x700/?nature"
+  },
+  {
+    title: "The Art of Mindfulness",
+    author: "Shivani",
+    date: "2023-07-05",
+    image: "https://source.unsplash.com/1250x700/?mindfulness"
+  },
+  {
+    title: "A Journey to the Stars",
+    author: "Sanjay",
+    date: "2023-07-02",
+    image: "https://source.unsplash.com/1250x700/?stars"
+  },
+  {
+    title: "The Joy of Cooking",
+    author: "Jayashree",
+    date: "2023-06-28",
+    image: "https://source.unsplash.com/1250x700/?cooking"
+  },
+  {
+    title: "The Beauty of Wildlife",
+    author: "Sai Krishna",
+    date: "2023-06-20",
+    image: "https://source.unsplash.com/1250x700/?wildlife"
+  },
+  {
+    title: "Finding Inner Peace",
+    author: "Jayashree",
+    date: "2023-06-15",
+    image: "https://source.unsplash.com/1250x700/?peace"
+  },
+  {
+    title: "Capturing Moments",
+    author: "Sai Krishna",
+    date: "2023-06-10",
+    image: "https://source.unsplash.com/1250x700/?moments"
+  }
+
+  
+    
+]
+renderBlogGrid(blogs, 'date-asc');
+
+
+
+    </script>
+    
+</body>
+</html>
